@@ -1,5 +1,5 @@
 {
-  "name": "next-twin",
+  "name": "explore-xstate",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -8,10 +8,12 @@
     "start": "next start"
   },
   "dependencies": {
+    "@xstate/react": "^1.0.1",
     "next": "9.5.3",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "styled-components": "^5.2.0",
-    "twin.macro": "^1.10.0"
+    "twin.macro": "^1.10.0",
+    "xstate": "^4.13.0"
   }
 }
