@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import {interpret, Machine} from 'xstate'
 
 export const LightMachine = Machine(
@@ -57,7 +58,20 @@ export const testLightMachine = () => {
     console.log(LightMachine.transition('red', 'NEXT'))
 }
 export const makeUseOfLightMachine = (transition) => {
-    const lightService = interpret(LightMachine)
-    lightService.start()
+    
     lightService.send(transition)
+}
+export const useLightMachine = () => {
+    const lightService = interpret(LightMachine)
+    //let [state, setState] = useState(lightService.initialState)
+    useEffect(() => {
+        lightService.start()
+        //setState(lightService.state)
+        return () => {lightService.stop()}
+    }, [])
+    const sendTransition = (transition) => {lightService.send(transition)}
+    return {
+        sendTransition
+        //,state
+    }
 }
