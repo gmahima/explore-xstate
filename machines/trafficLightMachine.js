@@ -79,3 +79,15 @@ export const useLightMachine = () => {
     }
 }
 // my guess: useMachine does something like the above internally i.e. interpret the machine into a service, start it, take in transitions and send them etc. (while maintaining state)
+
+const AnotherLightMachine = LightMachine.withContext({
+    elaplsed: 1000,
+    direction: 'north'
+})
+// creating another lightmachine by extending lightMachine with a different initial context, which is going to replace the original initial context completely
+// you can do this though:
+
+const Another2LightMachine = LightMachine.withContext({
+    ...LightMachine.context, //accessing original initial context
+    elaplsed: 1000
+})
