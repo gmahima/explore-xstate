@@ -5,6 +5,12 @@ export const LightMachine = Machine(
     {
         id: 'light',
         initial: 'red',
+        //context is extended state for all the states in machine
+        context: {
+            // initial context:
+            elapsed: 0,
+            direction: 'east'
+        },
         states: {
             green: {
                 entry: 'alertGreen',//action to be called on entering this node, is referenced as a string
@@ -57,10 +63,7 @@ export const testLightMachine = () => {
     console.log(LightMachine.transition({red: 'wait'}, 'NEXT'))
     console.log(LightMachine.transition('red', 'NEXT'))
 }
-export const makeUseOfLightMachine = (transition) => {
-    
-    lightService.send(transition)
-}
+
 export const useLightMachine = () => {
     const lightService = interpret(LightMachine)
     //let [state, setState] = useState(lightService.initialState)
@@ -75,3 +78,4 @@ export const useLightMachine = () => {
         //,state
     }
 }
+// my guess: useMachine does something like the above internally i.e. interpret the machine into a service, start it, take in transitions and send them etc. (while maintaining state)

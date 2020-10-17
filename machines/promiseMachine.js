@@ -29,4 +29,3 @@ export const makeUseOfPromiseMachine = (transition) => {
     promiseService.send(transition)
 
 }
-// my guess: useMachine does something like the above internally i.e. interpret the machine into a service, start it, take in transitions and send them etc. (while maintaining state)
