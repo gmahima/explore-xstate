@@ -4,6 +4,7 @@ import tw from 'twin.macro'
 import {toggleService} from '../machines/toggleMachine'
 import {fetchService} from '../machines/fetchMachine'
 import { testLightMachine } from '../machines/trafficLightMachine'
+import {makeUseOfPromiseMachine} from '../machines/promiseMachine'
 const Container = styled.div`
 ${tw `
  bg-testing-100 min-h-screen text-testing-200 flex flex-col
@@ -14,6 +15,7 @@ export default function Home() {
   toggleService.start()
   fetchService.start()
   testLightMachine()
+  makeUseOfPromiseMachine('RESOLVE')
   return (
     <Container>
       <div css={tw`font-bold text-lg bg-gray-100 m-64 p-4 rounded`}>
