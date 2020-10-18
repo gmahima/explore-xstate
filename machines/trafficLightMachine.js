@@ -21,10 +21,14 @@ export const LightMachine = Machine(
                 on: {
                     NEXT: 'yellow'
                 }
+                
             },
             yellow: {
                 on: {
                     NEXT: 'red'
+                },
+                meta: {
+                    message: 'some additional info: I panic when the yellow light comes up'
                 }
             },
             red: {
@@ -33,15 +37,24 @@ export const LightMachine = Machine(
                 },
                 initial: 'walk',
                 P_NEXT: "why",
+                meta: {
+                    message: 'automobiles, stop!'
+                },
                 states:{
                     walk: {
                         on: {
                             P_NEXT: 'wait'
+                        },
+                        meta: {
+                            message: 'pedestrians! walk'
                         }
                     },
                     wait: {
                         on: {
                             P_NEXT: 'walk'
+                        },
+                        meta: {
+                            message: 'pedestrians! wait'
                         }
                     }
                 }
@@ -59,18 +72,23 @@ export const LightMachine = Machine(
 )
 
 export const testLightMachine = () => {
-    console.log("initial state: " , LightMachine.initialState)
+    console.log("initial state: " , LightMachine.initialState, LightMachine.initialState.nextEvents)
     // logs a "State" object
     console.log(LightMachine.transition('yellow', 'NEXT'))
     // logs a "State" object
     // state.matches(parentSTateValue) ====>
     const state = LightMachine.transition('yellow', 'NEXT')
-    console.log(state)
+    console.log(state.changed, 'changed?')
+    console.log(state.toStrings())
     console.log(state.matches('red'))
     console.log(state.matches('red.walk'))
     console.log(state.matches('red.wait'))
     console.log(state.matches({red: 'walk'}))
     console.log(state.matches('green'))
+    console.log(state.meta)
+    const s2 = LightMachine.transition('red.walk', 'P_NEXT')
+    console.log(s2.meta)
+
 
 }
 
