@@ -1,10 +1,14 @@
 import { useEffect, useState } from 'react'
 import {interpret, Machine} from 'xstate'
 
+
+// state is absract representation of a system at a specific point in time.
+// a finite state machine can be in only 1 state at a time.
+// the current state of a machine is represented by a State instance.
 export const LightMachine = Machine(
     {
         id: 'light',
-        initial: 'red',
+        initial: 'green',
         //context is extended state for all the states in machine
         context: {
             // initial context:
@@ -56,12 +60,18 @@ export const LightMachine = Machine(
 
 export const testLightMachine = () => {
     console.log("initial state: " , LightMachine.initialState)
-    console.log(LightMachine.transition(LightMachine.initialState, 'NEXT').value)
-    console.log(LightMachine.transition('yellow', 'NEXT').value)
-    console.log(LightMachine.states)
-    console.log('should print p_next of wait', LightMachine.transition({red: 'wait'}, 'P_NEXT').value)
-    console.log(LightMachine.transition({red: 'wait'}, 'NEXT'))
-    console.log(LightMachine.transition('red', 'NEXT'))
+    // logs a "State" object
+    console.log(LightMachine.transition('yellow', 'NEXT'))
+    // logs a "State" object
+    // state.matches(parentSTateValue) ====>
+    const state = LightMachine.transition('yellow', 'NEXT')
+    console.log(state)
+    console.log(state.matches('red'))
+    console.log(state.matches('red.walk'))
+    console.log(state.matches('red.wait'))
+    console.log(state.matches({red: 'walk'}))
+    console.log(state.matches('green'))
+
 }
 
 export const useLightMachine = () => {

@@ -14,6 +14,7 @@ ${tw `
 export default function Home() {
   toggleService.start()
   fetchService.start()
+  testLightMachine()
   const {sendTransition} = useLightMachine()
   makeUseOfPromiseMachine('RESOLVE')
   return (
