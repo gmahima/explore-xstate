@@ -5,6 +5,7 @@ import {toggleService} from '../machines/toggleMachine'
 import {fetchService} from '../machines/fetchMachine'
 import { testLightMachine, makeUseOfLightMachine, useLightMachine } from '../machines/trafficLightMachine'
 import {makeUseOfPromiseMachine} from '../machines/promiseMachine'
+import {timeService} from '../machines/timeOfTheDay'
 const Container = styled.div`
 ${tw `
  bg-testing-100 min-h-screen text-testing-200 flex flex-col

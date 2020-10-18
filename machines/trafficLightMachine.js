@@ -4,6 +4,8 @@ import {interpret, Machine} from 'xstate'
 
 // state is absract representation of a system at a specific point in time.
 // a finite state machine can be in only 1 state at a time.
+// state nodes collectively describe the overall state a machine can be in
+// 5 types of state nodes: atomic, compound, parallel => (clildren but no initial), final, history => (parent node's most recent history state)
 // the current state of a machine is represented by a State instance.
 export const LightMachine = Machine(
     {

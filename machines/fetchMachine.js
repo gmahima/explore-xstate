@@ -1,5 +1,6 @@
 import {createMachine, interpret, assign} from 'xstate'
 
+
 const fetchMachine = createMachine({
     id: 'Poke-api',
     initial: 'idle',
