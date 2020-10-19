@@ -7,7 +7,7 @@ const timeMachine = Machine({
         time: undefined
     },
     states: {
-        // transient state => specifies transitions for the null event (which happens immediately in the state)
+        // transient state => specifies transitions for the null event (which happens immediately once a state is entered)
         unknown: {
             on: {
                 '': [
@@ -23,8 +23,8 @@ const timeMachine = Machine({
     }
 }, {
     guards: {
-        isBeforeNoon: (context) => {context.time && context.time.getHours() < 12},
-        isBeforeSix: (context) => {context.time && context.time.getHours() < 18}
+        isBeforeNoon: (context, event, rest) => {console.log(rest); context.time && context.time.getHours() < 12},
+        isBeforeSix: (context,event, rest) => {console.log(rest); context.time && context.time.getHours() < 18}
     }
 })
 

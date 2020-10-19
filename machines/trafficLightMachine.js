@@ -1,12 +1,23 @@
 import { useEffect, useState } from 'react'
 import {interpret, Machine} from 'xstate'
-
-
 // state is absract representation of a system at a specific point in time.
 // a finite state machine can be in only 1 state at a time.
 // state nodes collectively describe the overall state a machine can be in
 // 5 types of state nodes: atomic, compound, parallel => (clildren but no initial), final, history => (parent node's most recent history state)
 // the current state of a machine is represented by a State instance.
+
+// event causes state transition. transition cannot occur without external stimulus
+
+// const timerEvent = {
+//     type: 'TIMER'
+//   }; ====
+//   const timerEvent = 'TIMER';
+
+const keyDownEvent = {
+    type: 'keydown',
+    key: 'Enter'
+  };
+
 export const LightMachine = Machine(
     {
         id: 'light',
@@ -21,13 +32,15 @@ export const LightMachine = Machine(
             green: {
                 entry: 'alertGreen',//action to be called on entering this node, is referenced as a string
                 on: {
-                    NEXT: 'yellow'
+                    NEXT: 'yellow',
+                    keyDownEvent: 'yellow'
                 }
                 
             },
             yellow: {
                 on: {
-                    NEXT: 'red'
+                    NEXT: 'red',
+                    keyDownEvent: 'red'
                 },
                 meta: {
                     message: 'some additional info: I panic when the yellow light comes up'
@@ -35,7 +48,8 @@ export const LightMachine = Machine(
             },
             red: {
                 on: {
-                    NEXT: 'green'
+                    NEXT: 'green',
+                    keyDownEvent: 'red'
                 },
                 initial: 'walk',
                 P_NEXT: "why",
@@ -121,3 +135,4 @@ const Another2LightMachine = LightMachine.withContext({
     ...LightMachine.context, //accessing original initial context
     elaplsed: 1000
 })
+
