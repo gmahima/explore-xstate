@@ -9,13 +9,11 @@ const timeMachine = Machine({
     states: {
         // transient state => specifies transitions for the null event (which happens immediately once a state is entered)
         unknown: {
-            on: {
-                '': [
+            always: [
                     {target: 'morning', cond: 'isBeforeNoon'},
                     {target: 'afternoon', cond: 'isBeforeSix'},
                     {target: 'evening'}
                 ]
-            }
         },
         morning: {},
         afternoon: {},

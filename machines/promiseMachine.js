@@ -7,7 +7,8 @@ export const promiseMachine = Machine({
         pending: {
             on: {
                 RESOLVE: 'resolved',
-                REJECT: 'rejected'
+                REJECT: 'rejected',
+                // "*": "somewhere" // wildcard transition: activated by any event except '' if no other event of higher specificity takes place
             }
         },
         resolved: {
