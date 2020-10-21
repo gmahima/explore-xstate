@@ -15,6 +15,7 @@ ${tw `
 
 export default function Home() {
   const {sendTransition} = useLightMachine()
+  testLightMachine()
   toggleService.start()
   fetchService.start()
   testLightMachine()

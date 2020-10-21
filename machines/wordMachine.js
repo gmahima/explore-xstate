@@ -10,7 +10,7 @@ import {Machine, interpret} from 'xstate'
 // 1.1 internal transition
 //  created by specifying a relative target eg: '.left' or by specifying {internal: true}
 // transitions with undefined transitions are also internal
-
+//
 export const wordMachine = Machine({
     id: 'wordmachine',
     context: {

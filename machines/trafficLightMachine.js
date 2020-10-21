@@ -47,30 +47,40 @@ export const LightMachine = Machine(
                 }
             },
             red: {
-                on: {
-                    NEXT: 'green',
-                    keyDownEvent: 'red'
-                },
-                initial: 'walk',
-                P_NEXT: "why",
-                meta: {
-                    message: 'automobiles, stop!'
-                },
-                states:{
-                    walk: {
-                        on: {
-                            P_NEXT: 'wait'
-                        },
-                        meta: {
-                            message: 'pedestrians! walk'
+                type: 'parallel',
+                states: {
+                    walksign: {
+                        initial: 'solid',
+                        states: {
+                            solid:{
+                                on: {
+                                    COUNTDOWN: 'flashing'
+                                }
+                            },
+                            flashing: {
+                                on: {
+                                    STOP_COUNTDOWN: 'solid'
+                                }
+                            }
                         }
+
                     },
-                    wait: {
-                        on: {
-                            P_NEXT: 'walk'
-                        },
-                        meta: {
-                            message: 'pedestrians! wait'
+                    pedestrian: {
+                        initial: 'walk',
+                        states: {
+                            walk: {
+                                on: {
+                                    COUNTDOWN: 'wait'
+                                }
+                            },
+                            wait: {
+                                on: {
+                                    STOP_COUNTDOWN: 'stop'
+                                }
+                            },
+                            stop: {
+                                type: 'final'
+                            }
                         }
                     }
                 }
@@ -90,20 +100,7 @@ export const LightMachine = Machine(
 export const testLightMachine = () => {
     console.log("initial state: " , LightMachine.initialState, LightMachine.initialState.nextEvents)
     // logs a "State" object
-    console.log(LightMachine.transition('yellow', 'NEXT'))
-    // logs a "State" object
-    // state.matches(parentSTateValue) ====>
-    const state = LightMachine.transition('yellow', 'NEXT')
-    console.log(state.changed, 'changed?')
-    console.log(state.toStrings())
-    console.log(state.matches('red'))
-    console.log(state.matches('red.walk'))
-    console.log(state.matches('red.wait'))
-    console.log(state.matches({red: 'walk'}))
-    console.log(state.matches('green'))
-    console.log(state.meta)
-    const s2 = LightMachine.transition('red.walk', 'P_NEXT')
-    console.log(s2.meta)
+    console.log(LightMachine.transition('yellow', 'NEXT').value) // an obj with 2 properties is logged. since, parallel states
 
 
 }
@@ -136,3 +133,30 @@ const Another2LightMachine = LightMachine.withContext({
     elaplsed: 1000
 })
 
+const settingsMachine = Machine({
+    id: 'settings',
+    type: 'parallel',
+    states: {
+      mode: {
+        initial: 'active',
+        states: {
+          inactive: {},
+          pending: {},
+          active: {}
+        }
+      },
+      status: {
+        initial: 'enabled',
+        states: {
+          disabled: {},
+          enabled: {}
+        }
+      }
+    },
+    on: {
+      // Multiple targets
+      DEACTIVATE: {
+        target: ['.mode.inactive', '.status.disabled'] // you can also do give multiple parallel states as a target for a transition
+      }
+    }
+  });
