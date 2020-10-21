@@ -56,3 +56,12 @@ export const gameMachine = Machine(
   // condition is satisfied.
   gameService.send('AWARD_POINTS');
   // => 'win'
+
+ // forbidden transition: specifying nothing should happen when event occurs, not even the parent state must do anything. for this, we explicitly write
+ // ACTION: undefined
+ // or, ACTION: { 
+//      actions: []
+//                     
+//      
+//  }
+// remember that by default Actions without target are internal
