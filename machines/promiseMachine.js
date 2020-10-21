@@ -6,7 +6,7 @@ export const promiseMachine = Machine({
     states: {
         pending: {
             on: {
-                RESOLVE: 'resolved',
+                RESOLVE: 'resolved', // event discriptor: equivalent to event.type
                 REJECT: 'rejected',
                 // "*": "somewhere" // wildcard transition: activated by any event except '' if no other event of higher specificity takes place
             }
